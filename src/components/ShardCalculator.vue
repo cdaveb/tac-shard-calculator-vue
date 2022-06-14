@@ -1,5 +1,6 @@
 <script setup>
-import { numGates, minStepsForNextGate, gateShardCosts, maxGateSteps } from '../data/gateData.js';
+import { useEnlightenment } from '../use/useEnlightenment';
+const { numGates, maxAllGates, resetAllGates, getTotalShards } = useEnlightenment();
 import ShardGate from './ShardGate.vue'
 </script>
 
@@ -8,56 +9,6 @@ export default {
     components: {
         ShardGate
     },
-    data() {
-        return {
-            gateValues: {'gate_1': 0, 'gate_2': 0, 'gate_3': 0, 'gate_4': 0, 'gate_5': 0, 'gate_6': 0, 'gate_7':0}
-        }
-    },
-    computed: {
-        totalShards() {
-            let total = 0;
-            let tempValue = 0;
-            for (let key in this.gateValues) {
-                tempValue = parseInt(this.gateValues[key]);
-                if (tempValue <= 0) { continue; }
-                // Loop through gate shard costs until you have reached the max gate level specified
-                for (let i = 0; i < this.gateShardCosts[key].length; i++) {
-                    if (i >= tempValue) { break; }
-                    total += this.gateShardCosts[key][i];
-                }
-            }
-    
-            return total;
-        }
-    },
-    methods: {
-        // Generate gate key
-        gateKey: function(gateNum) {
-            return 'gate_' + gateNum;
-        },
-        // Create an object which sets all valid gates to the specified value
-        setGatesToValue: function(value) {
-            let intValue = parseInt(value);
-    
-            let gateValues = {}
-            for (let key in this.gateShardCosts) {
-                this.gateValues[key] = intValue;
-            }
-        },
-        handleGateValueUpdate: function(gateNum) {
-            for (let i = 1; i < gateNum; i++) {
-                let tempKey = this.gateKey(i)
-                if (this.gateValues[tempKey] < this.minStepsForNextGate) {
-                    this.gateValues[tempKey] = this.minStepsForNextGate;
-                }
-            }
-            if (this.gateValues[this.gateKey(gateNum)] < 2) {
-                for (let i = gateNum + 1; i <= this.numGates; i++) {
-                    this.gateValues[this.gateKey(i)] = 0;
-                }
-            }
-        }
-    }
 }
 </script>
 
@@ -67,16 +18,16 @@ export default {
             <fieldset className="shard-select-container">
                 <legend key="gateListLegend">Enlightenment Gates</legend>
                 
-                <ShardGate v-for="n in numGates" :gate-num="n" v-model:gateVal="gateValues['gate_' + n]"  @change="handleGateValueUpdate(n)" />
+                <ShardGate v-for="n in numGates" :gate-num="n" />
             </fieldset>
             <section class="total-shards-container">
                 <h2>Total Shards</h2>
-                <p id="total-shards-display" data-testid="total-shards-display" aria-live="polite">{{totalShards}}</p>
+                <p id="total-shards-display" data-testid="total-shards-display" aria-live="polite">{{getTotalShards()}}</p>
             </section>
         </div>
         <div class="gate-options">
-            <button id="max_all_gates" @click="setGatesToValue(maxGateSteps)">Max All Gates</button>
-            <button id="clear_all_gates" @click="setGatesToValue(0)">Clear All Gates</button>
+            <button id="max_all_gates" @click="maxAllGates()">Max All Gates</button>
+            <button id="clear_all_gates" @click="resetAllGates()">Clear All Gates</button>
         </div>
     </div>
 </template>

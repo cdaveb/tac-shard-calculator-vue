@@ -1,21 +1,18 @@
 <script setup>
-import { maxGateSteps } from '../data/gateData.js';
+import { useEnlightenment } from '../use/useEnlightenment';
+const { gateValues, gateKey, maxGateSteps, handleUpdatedGateValue } = useEnlightenment();
 </script>
 
 <script>
 export default {
-    emits: ['update:gateVal'],
     props: {
         gateNum: {
             type: Number,
             required: true
         },
-        gateVal: {
-            required: true
-        }
     },
     computed: {
-        gateKey() {
+        gateId() {
             return 'gateSelect' + this.gateNum
         },
     },
@@ -24,12 +21,12 @@ export default {
 
 <template>
     <div class="gate-container">
-        <label :for="gateKey">{{gateNum}}</label>
+        <label :for="gateId">{{gateNum}}</label>
         <select 
+            v-model="gateValues[gateKey(gateNum)]"
             :data-gateid="gateNum"
-            :id="gateKey"
-            :value="gateVal"
-            @input="$emit('update:gateVal', $event.target.value)"
+            :id="gateId"
+            @change="handleUpdatedGateValue(gateNum)"
         >
             <option v-for="(value, index) in maxGateSteps + 1" :key="index" :value="index">{{index}}</option>
         </select>
