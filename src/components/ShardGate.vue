@@ -1,13 +1,10 @@
-<script>
+<script setup>
 import { maxGateSteps } from '../data/gateData.js';
+</script>
 
+<script>
 export default {
     emits: ['update:gateVal'],
-    data() {
-        return {
-            maxGateSteps: maxGateSteps
-        }
-    },
     props: {
         gateNum: {
             type: Number,

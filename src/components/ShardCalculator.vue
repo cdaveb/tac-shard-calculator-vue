@@ -1,15 +1,15 @@
-<script>
+<script setup>
 import { numGates, minStepsForNextGate, gateShardCosts, maxGateSteps } from '../data/gateData.js';
 import ShardGate from './ShardGate.vue'
+</script>
 
+<script>
 export default {
     components: {
         ShardGate
     },
     data() {
         return {
-            numGates: numGates,
-            maxGateSteps: maxGateSteps,
             gateValues: {'gate_1': 0, 'gate_2': 0, 'gate_3': 0, 'gate_4': 0, 'gate_5': 0, 'gate_6': 0, 'gate_7':0}
         }
     },
@@ -21,9 +21,9 @@ export default {
                 tempValue = parseInt(this.gateValues[key]);
                 if (tempValue <= 0) { continue; }
                 // Loop through gate shard costs until you have reached the max gate level specified
-                for (let i = 0; i < gateShardCosts[key].length; i++) {
+                for (let i = 0; i < this.gateShardCosts[key].length; i++) {
                     if (i >= tempValue) { break; }
-                    total += gateShardCosts[key][i];
+                    total += this.gateShardCosts[key][i];
                 }
             }
     
@@ -40,15 +40,20 @@ export default {
             let intValue = parseInt(value);
     
             let gateValues = {}
-            for (let key in gateShardCosts) {
+            for (let key in this.gateShardCosts) {
                 this.gateValues[key] = intValue;
             }
         },
         handleGateValueUpdate: function(gateNum) {
             for (let i = 1; i < gateNum; i++) {
                 let tempKey = this.gateKey(i)
-                if (this.gateValues[tempKey] < minStepsForNextGate) {
-                    this.gateValues[tempKey] = minStepsForNextGate;
+                if (this.gateValues[tempKey] < this.minStepsForNextGate) {
+                    this.gateValues[tempKey] = this.minStepsForNextGate;
+                }
+            }
+            if (this.gateValues[this.gateKey(gateNum)] < 2) {
+                for (let i = gateNum + 1; i <= this.numGates; i++) {
+                    this.gateValues[this.gateKey(i)] = 0;
                 }
             }
         }
