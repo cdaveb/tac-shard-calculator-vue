@@ -1,5 +1,5 @@
 <script setup>
-import { useEnlightenment } from '../use/useEnlightenment';
+import useEnlightenment from '../use/useEnlightenment';
 const { gateValues, gateKey, maxGateSteps, handleUpdatedGateValue } = useEnlightenment();
 </script>
 

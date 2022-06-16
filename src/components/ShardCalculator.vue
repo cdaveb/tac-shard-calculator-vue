@@ -1,10 +1,10 @@
 <script setup>
-import { useEnlightenment } from '../use/useEnlightenment';
+import useEnlightenment from '../use/useEnlightenment';
 const { numGates, maxAllGates, resetAllGates, getTotalShards } = useEnlightenment();
-import ShardGate from './ShardGate.vue'
 </script>
 
 <script>
+import ShardGate from './ShardGate.vue'
 export default {
     components: {
         ShardGate
@@ -22,7 +22,7 @@ export default {
             </fieldset>
             <section class="total-shards-container">
                 <h2>Total Shards</h2>
-                <p id="total-shards-display" data-testid="total-shards-display" aria-live="polite">{{getTotalShards()}}</p>
+                <p id="total-shards-display" aria-live="polite">{{getTotalShards()}}</p>
             </section>
         </div>
         <div class="gate-options">

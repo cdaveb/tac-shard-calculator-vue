@@ -11,7 +11,7 @@ const gateValues = reactive({
     'gate_7': 0
 });
 
-export function useEnlightenment() {
+export default function useEnlightenment() {
     // Method to convert a gate number to the appropriate key
     const gateKey = (gateNum) => {
         return 'gate_' + gateNum;
