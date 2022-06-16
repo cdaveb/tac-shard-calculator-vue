@@ -16,18 +16,39 @@ export default {
     <div id="shard-calculator">
         <div id="calculator-container">
             <fieldset className="shard-select-container">
-                <legend key="gateListLegend">Enlightenment Gates</legend>
+                <legend key="gateListLegend">
+                    Enlightenment Gates
+                </legend>
                 
-                <ShardGate v-for="n in numGates" :gate-num="n" />
+                <ShardGate 
+                    v-for="n in numGates" 
+                    :key="n"
+                    :gate-num="n" 
+                />
             </fieldset>
             <section class="total-shards-container">
                 <h2>Total Shards</h2>
-                <p id="total-shards-display" aria-live="polite">{{getTotalShards()}}</p>
+                <p 
+                    id="total-shards-display"
+                    aria-live="polite"
+                >
+                    {{ getTotalShards() }}
+                </p>
             </section>
         </div>
         <div class="gate-options">
-            <button id="max_all_gates" @click="maxAllGates()">Max All Gates</button>
-            <button id="clear_all_gates" @click="resetAllGates()">Clear All Gates</button>
+            <button 
+                id="max_all_gates" 
+                @click="maxAllGates()"
+            >
+                Max All Gates
+            </button>
+            <button
+                id="clear_all_gates"
+                @click="resetAllGates()"
+            >
+                Clear All Gates
+            </button>
         </div>
     </div>
 </template>

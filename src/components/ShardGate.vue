@@ -21,14 +21,20 @@ export default {
 
 <template>
     <div class="gate-container">
-        <label :for="gateId">{{gateNum}}</label>
+        <label :for="gateId">{{ gateNum }}</label>
         <select 
+            :id="gateId"
             v-model="gateValues[gateKey(gateNum)]"
             :data-gateid="gateNum"
-            :id="gateId"
             @change="handleUpdatedGateValue(gateNum)"
         >
-            <option v-for="(value, index) in maxGateSteps + 1" :key="index" :value="index">{{index}}</option>
+            <option 
+                v-for="(value, index) in maxGateSteps + 1"
+                :key="index" 
+                :value="index"
+            >
+                {{ index }}
+            </option>
         </select>
     </div>
 </template>

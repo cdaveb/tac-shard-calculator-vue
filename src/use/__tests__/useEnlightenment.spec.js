@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 
-import { describe, it, expect, test } from 'vitest'
+import { expect, test } from 'vitest'
 import useEnlightenment from '../useEnlightenment.js'
 const { gateValues, gateKey, maxGateSteps, handleUpdatedGateValue, numGates, maxAllGates, resetAllGates, getTotalShards } = useEnlightenment();
 
